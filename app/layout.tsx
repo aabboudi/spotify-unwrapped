@@ -6,7 +6,9 @@ import "@/styles/globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
+import { ThemeProvider } from "@/components/theme-provider";
 import { SessionProvider } from "next-auth/react";
+import Navbar from "@/components/navbar";
 
 // export const metadata: Metadata = {
 //   title: "Create Next App",
@@ -21,7 +23,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <SessionProvider>{children}</SessionProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <SessionProvider>
+            <Navbar />
+            {children}
+          </SessionProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
