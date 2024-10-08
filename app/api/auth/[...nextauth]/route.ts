@@ -14,6 +14,7 @@ const handler = NextAuth({
       },
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET!,
   callbacks: {
     async redirect({ url, baseUrl }) {
       return baseUrl + '/dashboard'; // post callback redirect
