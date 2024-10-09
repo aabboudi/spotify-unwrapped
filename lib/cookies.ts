@@ -5,3 +5,8 @@ export function getServerSideCookies(cookieName: string) {
   const myCookie = cookieStore.get(cookieName);
   return myCookie?.value;
 }
+
+export function isAuthenticated() {
+  const cookie = getServerSideCookies("access_token");
+  return !!cookie;
+}
