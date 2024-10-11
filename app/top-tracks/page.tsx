@@ -1,7 +1,6 @@
 "use server";
 
 import { getProfile } from '@/lib/fetch/current';
-import { getPlaylists } from '@/lib/fetch/playlists';
 import { getTopItems } from '@/lib/fetch/stats';
 import { getFlag } from '@/lib/utils';
 
@@ -11,11 +10,7 @@ import Link from 'next/link';
 export default async function Dashboard() {
   const profile = await getProfile();
   const flag = getFlag(profile.country);
-
-  const playlists = await getPlaylists({ limit: 10 });
-  const top = await getTopItems();
-
-  console.log(top);
+  const topTracks = await getTopItems();
 
   return (
     <div className="min-h-screen grid lg:grid-cols-3 justify-center pt-4">
@@ -24,17 +19,17 @@ export default async function Dashboard() {
       </div>
       <div>
         <h3 className='text-xl'>Top 10 Playlists</h3>
-        {playlists?.items?.map((playlist: any, index: number) => (
+        {topTracks?.items?.map((track: any, index: number) => (
           <Link className="flex gap-4 my-4 items-center hover:underline" href="#" key={index}>
             <Image
               alt="Playlist image"
-              src={playlist.images[0].url}
+              src={track.album.images[0].url || ""}
               width={50}
               height={50}
             />
             <div>
-              <h4 className="text-xl">{playlist.name}</h4>
-              {/* <p className="text-sm">{playlist.description}</p> */}
+              <h4 className="text-xl">{track.name}</h4>
+              {/* <p className="text-sm">{track.album.images[0].url}</p> */}
             </div>
           </Link>
         ))}

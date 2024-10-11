@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Frame, Mic } from "lucide-react";
+import { Frame, MicVocal } from "lucide-react";
 import { siteConfig } from "@/lib/siteConfig";
 
 import { ThemeSwitch } from "@/components/theme-switch";
@@ -12,9 +12,44 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { signOut } from "next-auth/react";
+import { isAuthenticated } from "@/lib/cookies";
+
+const LoginButton = () => {
+  return (
+    <Button asChild variant="default">
+      <Link href={siteConfig.callToAction.href}>
+        {siteConfig.callToAction.label}
+        <MicVocal className="ml-2 h-4 w-4" />
+      </Link>
+    </Button>
+  );
+}
+
+const LogoutButton = () => {
+  return (
+    // <Button variant="destructive" onClick={() => signOut({ callbackUrl: '/' })}>
+    //   Log out
+    // </Button>
+    <button
+    onClick={() => signOut({ callbackUrl: '/' })}
+    className="px-4 py-2 bg-red-500 text-white rounded mt-4 hover:bg-red-600 transition"
+  >
+    Sign Out
+  </button>
+  );
+}
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false);
+  const [isAuth, setIsAuth] = React.useState(false);
+
+  // React.useEffect(() => {
+  //   const cookieValue = isAuthenticated();
+  //   if (cookieValue) {
+  //     setIsAuth(isAuth);
+  //   }
+  // }, []);
 
   return (
     <nav className="sticky top-0 w-full bg-background border-b">
@@ -33,13 +68,10 @@ export default function Navbar() {
                   <Link href={item.href}>{item.label}</Link>
                 </Button>
               ))}
-              <Button key={siteConfig.callToAction.label} variant="default" asChild>
-                <Link href={siteConfig.callToAction.href}>
-                  {siteConfig.callToAction.label}
-                  <Mic className="ml-2 h-4 w-4" />
-                </Link>
+              {isAuth ? <LogoutButton /> : <LoginButton />}
+              <Button asChild>
+                <ThemeSwitch />
               </Button>
-              <ThemeSwitch />
             </div>
           </div>
           <div className="md:hidden">
@@ -79,11 +111,7 @@ export default function Navbar() {
                       )}
                     </React.Fragment>
                   ))}
-                  <Button asChild variant="default">
-                    <Link href={siteConfig.callToAction.href}>
-                      {siteConfig.callToAction.label}
-                    </Link>
-                  </Button>
+                  {isAuth ? <LogoutButton /> : <LoginButton />}
                 </nav>
               </SheetContent>
             </Sheet>
