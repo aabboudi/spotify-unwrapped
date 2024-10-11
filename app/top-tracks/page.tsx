@@ -12,8 +12,6 @@ export default async function Dashboard() {
   const flag = getFlag(profile.country);
   const topTracks = await getTopItems();
 
-  console.log(topTracks.items[0].album.images[0])
-
   return (
     <div className="min-h-screen grid lg:grid-cols-3 justify-center pt-4">
       <div className="col-span-1 text-center">
@@ -25,7 +23,7 @@ export default async function Dashboard() {
           <Link className="flex gap-4 my-4 items-center hover:underline" href="#" key={index}>
             <Image
               alt="Playlist image"
-              src={track.album.images[0].url}
+              src={track.album.images[0].url || ""}
               width={50}
               height={50}
             />

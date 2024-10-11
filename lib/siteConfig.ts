@@ -21,8 +21,8 @@ export const siteConfig = {
       href: "/stats",
     },
     {
-      label: "Contact",
-      href: "/contact",
+      label: "Create",
+      href: "/create-playlist",
     },
   ],
   links: {
