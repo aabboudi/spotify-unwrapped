@@ -21,14 +21,14 @@ export async function getPlaylists(params?: PlaylistInterface) {
 
 interface SearchInterface {
   q: string;
-  type: "album" | "artist" | "playlist" | "track" | "show" | "episode" | "audiobook";
+  type?: "album" | "artist" | "playlist" | "track" | "show" | "episode" | "audiobook";
   market?: string;
   limit?: number;
   offset?: number;
   include_external?: "audio";
 }
 
-export async function searchItem({ q, type, limit=1, offset=0 }: SearchInterface) {
+export async function searchItem({ q, type="track", limit=1, offset=0 }: SearchInterface) {
   let accessToken = getServerSideCookies("access_token");
 
   const query = new URLSearchParams({

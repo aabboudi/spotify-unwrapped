@@ -13,7 +13,7 @@ export async function getGroqChatCompletion(prompt: string) {
     messages: [
       {
         role: "system",
-        content: "Generate a playlist in JSON format as an array of objects of song and artist. The playlist is described by the following:",
+        content: "Generate a playlist recommendation that fits this format: a JSON array called 'playlist' of objects containing song and artist. The playlist is described by the following:",
       },
       {
         role: "user",

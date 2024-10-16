@@ -1,4 +1,5 @@
 import { getServerSideCookies } from "@/lib/cookies";
+import { searchItem } from "../fetch/items";
 
 interface CreatePlaylistBodyInterface {
   name: string,
@@ -20,4 +21,13 @@ async function createPlaylist(user: string, body: CreatePlaylistBodyInterface) {
 
   const data = await response.json();
   return data;
+}
+
+async function getTrackID(song: string, artist: string): Promise<string> {
+  const searchResult = await searchItem({
+    q: `${song} ${artist}`,
+    type: 'track'
+  });
+
+  return searchResult.tracks.items[0].id;
 }
